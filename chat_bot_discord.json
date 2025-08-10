@@ -1,0 +1,126 @@
+{
+  "name": "My workflow 6",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -280
+      ],
+      "id": "c7459637-43f1-4f4e-a757-dfe7d72362da",
+      "name": "When chat message received",
+      "webhookId": "60544a4c-125e-4ec2-95c5-bd09fc77cf03"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        320,
+        -280
+      ],
+      "id": "3a08558e-8804-4159-b77b-222f11771ae4",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -100
+      ],
+      "id": "88b3230c-b849-44f4-99f4-319924c07ec0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XmPuV9mPTU20r9gm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        720,
+        -280
+      ],
+      "id": "fa378603-90ac-4202-bfd6-0b9a72f97e7f",
+      "name": "Discord",
+      "webhookId": "f36f05bd-6142-408e-83d3-ce1b23c4c2cf",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "iMFNhn8imjFx2gtM",
+          "name": "Discord Webhook account 19"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6371c000-4a52-4f7b-8e3b-27a660931f49",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c91c5b6efe2709e07c37996245857ac5d863d575d07e0072127351337c204c40"
+  },
+  "id": "sObXzDVZOm5kN7Im",
+  "tags": []
+}
